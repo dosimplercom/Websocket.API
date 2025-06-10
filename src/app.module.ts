@@ -5,6 +5,7 @@ import { AppointmentsService } from './appointments/appointments.service';
 import { AppointmentsController } from './appointments/appointments.controller';
 import { ConfigModule } from '@nestjs/config';
 import { WsJwtAuthGuard } from './auth/ws-jwt-auth.guard';
+import { AppController } from './app.controller';
 
 @Module({
   imports:[
@@ -16,7 +17,7 @@ import { WsJwtAuthGuard } from './auth/ws-jwt-auth.guard';
       ignoreEnvFile: process.env.NODE_ENV === 'production'
     }),
   ],
-  controllers: [AppointmentsController],
+  controllers: [AppointmentsController, AppController],
   providers: [AppointmentGateway, AppointmentsService, WsJwtAuthGuard],
 })
 export class AppModule { }

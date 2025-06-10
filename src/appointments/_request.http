@@ -1,6 +1,6 @@
 ### notify
 
- //http://localhost:3000
+// @baseUrl = http://localhost:3000
 @baseUrl =  'https://websocket-api-gafagjdefce5g6cr.canadaeast-01.azurewebsites.net'
 
 POST {{baseUrl}}/api/appointments/notify 

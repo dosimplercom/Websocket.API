@@ -13,9 +13,10 @@ import * as jwt from 'jsonwebtoken';
 import { UseGuards } from '@nestjs/common';
 import { WsJwtAuthGuard } from 'src/auth/ws-jwt-auth.guard';
 import { WsUser } from 'src/auth/ws-user.decorator';
+import { origins } from 'src/cors/origins';
 
 @WebSocketGateway({
-  origin: 'http://localhost:4200',
+  origin: origins,
   methods: ['GET', 'POST'],
   credentials: true,
 })
