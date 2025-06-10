@@ -14,7 +14,11 @@ import { UseGuards } from '@nestjs/common';
 import { WsJwtAuthGuard } from 'src/auth/ws-jwt-auth.guard';
 import { WsUser } from 'src/auth/ws-user.decorator';
 
-@WebSocketGateway({ cors: true })
+@WebSocketGateway({
+  origin: 'http://localhost:4200',
+  methods: ['GET', 'POST'],
+  credentials: true,
+})
 export class AppointmentGateway
   implements OnGatewayConnection, OnGatewayDisconnect
 {
@@ -25,10 +29,14 @@ export class AppointmentGateway
     const token = client.handshake.auth.token || client.handshake.query.token;
 
     try {
-      const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET || '');// this should be your secret key which authentication system uses during login process.
+      const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET || ''); // this should be your secret key which authentication system uses during login process.
       (client as any).user = decoded;
       //console.log(`WebSocket connected: ${Object.keys(decoded)}`);
-      if (typeof decoded === 'object' && decoded !== null && 'full_name' in decoded) {
+      if (
+        typeof decoded === 'object' &&
+        decoded !== null &&
+        'full_name' in decoded
+      ) {
         console.log(`WebSocket connected: ${(decoded as any).full_name}`);
       }
     } catch (err) {
