@@ -1,0 +1,15 @@
+### notify
+
+@baseUrl = http://localhost:3000
+
+POST {{baseUrl}}/api/appointments/notify 
+Content-Type: application/json
+Internal-WS-Api-Key: your_internal_api_key
+
+{
+    "event": "created",
+    "data": {
+        "appointmentId": "12345",
+        "notificationType": "email"
+    }
+}

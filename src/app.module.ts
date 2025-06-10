@@ -3,17 +3,20 @@ import { Module } from '@nestjs/common';
 import { AppointmentGateway } from './gateways/appointment.gateway';
 import { AppointmentsService } from './appointments/appointments.service';
 import { AppointmentsController } from './appointments/appointments.controller';
-import { S2SJwtStrategy } from './auth/jwt.strategy';
 import { ConfigModule } from '@nestjs/config';
+import { WsJwtAuthGuard } from './auth/ws-jwt-auth.guard';
 
 @Module({
   imports:[
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `.env.${process.env.NODE_ENV}`,
+      envFilePath: process.env.NODE_ENV
+        ? `.env.${process.env.NODE_ENV}`
+        : '.env',
+      ignoreEnvFile: process.env.NODE_ENV === 'production'
     }),
   ],
   controllers: [AppointmentsController],
-  providers: [AppointmentGateway, AppointmentsService, S2SJwtStrategy],
+  providers: [AppointmentGateway, AppointmentsService, WsJwtAuthGuard],
 })
 export class AppModule { }
